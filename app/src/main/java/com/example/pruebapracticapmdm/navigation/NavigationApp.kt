@@ -4,7 +4,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pruebapracticapmdm.navigation.AppScreen
-import com.example.pruebapracticapmdm.navigation.AppScreen.Form.info
 import com.example.pruebapracticapmdm.screens.Form
 import com.example.pruebapracticapmdm.screens.Salute
 

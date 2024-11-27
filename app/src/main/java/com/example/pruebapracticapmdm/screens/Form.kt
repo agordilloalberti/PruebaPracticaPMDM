@@ -8,7 +8,6 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -48,7 +47,7 @@ fun Formulario(navController: NavController, modifier: Modifier) {
 
         AddTextField("Contraseña",Modifier.align(Alignment.CenterHorizontally), PasswordVisualTransformation(),password) {password=it}
 
-        AddButton(Modifier.align(Alignment.CenterHorizontally),navController,name,surname,dni, age, password)
+        AddButton(Modifier.align(Alignment.CenterHorizontally),navController,name,surname,dni, age, password){dni="";age="";password=""}
     }
 }
 
@@ -68,20 +67,57 @@ fun AddTextField(label:String,modifier: Modifier, transformation: VisualTransfor
 }
 
 @Composable
-fun AddButton(modifier: Modifier,navController: NavController,name:String,surname:String,dni:String,age:String,password:String){
+fun AddButton(
+    modifier: Modifier,
+    navController: NavController,
+    name: String,
+    surname: String,
+    dni: String,
+    age: String,
+    password: String,
+    reset: () -> Unit,){
     Button(
         modifier = modifier,
         onClick =
         {
-            info = Info(name,surname,dni, checkInt(age),password)
-            navController.navigate(route = AppScreen.Salute.toString())
+            val r = checkData(name,surname,dni,age,password)
+            if (r==0) {
+                info = Info(name, surname, dni, age.toInt(), password)
+                navController.navigate(route = AppScreen.Salute)
+            }else{
+                //reset(r)
+                reset()
+            }
         }
     ){
         Text(text = "Enviar información")
     }
 }
 
+fun checkData(name: String, surname: String, dni: String, age: String, password: String): Int {
+    return if (name.isBlank()){
+        1
+    }else if (surname.isBlank()){
+        2
+    } else if(!checkDNI(dni)){
+        3
+    }else if (checkInt(age)==-1){
+        4
+    }else if (password.isBlank()){
+        5
+    } else{
+        0
+    }
+}
+
+fun checkDNI(dni: String): Boolean {
+    val regex = Regex("/([0-9])([A-Z])/")
+    //return dni.matches(regex)
+    return true
+}
+
 fun checkInt(s: String): Int {
+    if (s.isBlank()) return -1
     return try {
         s.toInt()
     }catch (e:Exception){

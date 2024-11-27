@@ -1,7 +1,7 @@
 package com.example.pruebapracticapmdm.navigation
 
-sealed class AppScreen(val route: String) {
+open class AppScreen(val route: String) {
     var info: Any? = null
-    object Form: AppScreen("Form")
-    object Salute: AppScreen("Salute")
+    data object Form: AppScreen("Form")
+    data object Salute: AppScreen("Salute")
 }
