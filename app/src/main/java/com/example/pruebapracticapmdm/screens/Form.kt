@@ -18,7 +18,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.navigation.NavController
+import com.example.pruebapracticapmdm.Info
 import com.example.pruebapracticapmdm.navigation.AppScreen
+import com.example.pruebapracticapmdm.navigation.AppScreen.Form.info
 
 @Composable
 fun Form(navController: NavController, modifier: Modifier){
@@ -46,7 +48,7 @@ fun Formulario(navController: NavController, modifier: Modifier) {
 
         AddTextField("Contraseña",Modifier.align(Alignment.CenterHorizontally), PasswordVisualTransformation(),password) {password=it}
 
-        AddButton(Modifier.align(Alignment.CenterHorizontally))
+        AddButton(Modifier.align(Alignment.CenterHorizontally),navController,name,surname,dni, age, password)
     }
 }
 
@@ -66,12 +68,16 @@ fun AddTextField(label:String,modifier: Modifier, transformation: VisualTransfor
 }
 
 @Composable
-fun AddButton(modifier: Modifier,navController: NavController){
+fun AddButton(modifier: Modifier,navController: NavController,name:String,surname:String,dni:String,age:String,password:String){
     Button(
         modifier = modifier,
-        onClick = {navController.navigate(route = AppScreen.Salute)}
+        onClick =
+        {
+            info = Info(name,surname,dni, checkInt(age),password)
+            navController.navigate(route = AppScreen.Salute.toString())
+        }
     ){
-
+        Text(text = "Enviar información")
     }
 }
 

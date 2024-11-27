@@ -6,17 +6,11 @@ import androidx.navigation.NavController
 import com.example.pruebapracticapmdm.Info
 
 @Composable
-fun Salute(navController: NavController,modifier: Modifier
-//           ,info: Info
-){
-    Saludo(navController,modifier
-    //    ,info
-    )
+fun Salute(navController: NavController,modifier: Modifier){
+    Saludo(navController,modifier)
 }
 
 @Composable
-fun Saludo(navController: NavController, modifier: Modifier
-//           ,info: Info
-) {
+fun Saludo(navController: NavController, modifier: Modifier) {
 
 }
