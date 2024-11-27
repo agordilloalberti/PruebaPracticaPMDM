@@ -35,7 +35,7 @@ fun Formulario(navController: NavController, modifier: Modifier) {
     var password by rememberSaveable { mutableStateOf("") }
     Column(modifier = modifier.fillMaxSize())
     {
-        Text(text = "Titulo", modifier = Modifier.align(Alignment.CenterHorizontally))
+        Text(text = "Inicio de sesión", modifier = Modifier.align(Alignment.CenterHorizontally))
 
         AddTextField("Nombre",Modifier.align(Alignment.CenterHorizontally), VisualTransformation.None,name) {name = it}
 
@@ -82,10 +82,13 @@ fun AddButton(
         {
             val r = checkData(name,surname,dni,age,password)
             if (r==0) {
+                /*
+                No me voy a andar con rodeos, me he llevado mucho tiempo buscando como hacerlo bien pero no me sale asi que
+                los datos se pasan a una variable objeto dentro de otra clase y se acceden desde la otra pantalla
+                */
                 info = Info(name, surname, dni, age.toInt(), password)
-                navController.navigate(route = AppScreen.Salute)
+                navController.navigate(route = AppScreen.Salute.toString())
             }else{
-                //reset(r)
                 reset()
             }
         }
@@ -111,6 +114,7 @@ fun checkData(name: String, surname: String, dni: String, age: String, password:
 }
 
 fun checkDNI(dni: String): Boolean {
+    //La expresión regular no funciona como deberia, dejo el código que deberia funcionar comentado
     val regex = Regex("/([0-9])([A-Z])/")
     //return dni.matches(regex)
     return true

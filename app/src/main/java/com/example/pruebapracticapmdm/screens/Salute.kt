@@ -3,10 +3,12 @@ package com.example.pruebapracticapmdm.screens
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.navigation.NavController
 import com.example.pruebapracticapmdm.Info
 import com.example.pruebapracticapmdm.navigation.AppScreen
@@ -23,17 +25,13 @@ fun Saludo(navController: NavController, modifier: Modifier) {
 
         val i = info as Info
 
-        AddText(i.name,Modifier.align(Alignment.CenterHorizontally))
-        AddText(i.surname,Modifier.align(Alignment.CenterHorizontally))
-        AddText(i.dni,Modifier.align(Alignment.CenterHorizontally))
-        AddText(i.age.toString(),Modifier.align(Alignment.CenterHorizontally))
-        AddText(occult(i.password),Modifier.align(Alignment.CenterHorizontally))
+        AddText(i,Modifier.align(Alignment.CenterHorizontally))
 
         Button(
-            modifier = modifier,
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             onClick =
             {
-                navController.navigate(route = AppScreen.Form)
+                navController.navigate(route = AppScreen.Form.toString())
             }
         ){
             Text(text = "Volver al formulario")
@@ -42,14 +40,16 @@ fun Saludo(navController: NavController, modifier: Modifier) {
 }
 
 @Composable
-fun AddText(text: String,modifier: Modifier) {
-    Text(text=text,modifier=modifier)
-}
+fun AddText(info: Info,modifier: Modifier) {
+    val s = "Hola ${info.name} ${info.surname} con dni: ${info.dni}, su información ha sido almacenada\n" +
+            "Consulte las opciones que tiene a sus ${info.age} años"
 
-fun occult(s: String): String {
-    var r =""
-    for (c in s){
-        r+="·"
-    }
-    return r
+    OutlinedTextField(
+        value = s,
+        modifier = modifier,
+        enabled = true,
+        readOnly = true,
+        onValueChange = {},
+        shape = RectangleShape,
+    )
 }
